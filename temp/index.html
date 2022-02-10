@@ -1,18 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Debug bool{% endblock %}
+{% block title %}Home Page{% endblock %}
 
 {% block content %}
-<form action="#" method="post">
-	<p>Encender / Apagar debug:</p>
-	<label class="switch">
-		<input type="checkbox">
-		<span class="slider round"></span>
-	</label>
-
-
-</form>
-
-
+<form action="#" method="get">
+	<a href="/app_form">
+	   <input type="button" value="Debug Variables" />
+	</a>
 
 {% endblock %}
-
