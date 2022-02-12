@@ -1,1 +1,23 @@
 {% extends "layout.html" %}
+
+{% block content %}
+  <div class="content-section">
+    <form method="post" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-top mb-4">Debug Values section</legend>
+          <div class="form-group">
+            {{ form.debug.label(class="form-control-label")}}
+            {{ form.debug(class="form-control form-control-lg") }}
+          </div>
+          <div class="form-group">
+            {{ form.url_given.label(class="form-control-label")}}
+            {{ form.url_given(class="form-control form-control-lg") }}
+          </div>
+          <div>
+            {{ form.submit(class="btn btn-outline-info")}}
+          </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock content %}
