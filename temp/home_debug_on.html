@@ -3,9 +3,7 @@
 	<div class="content-section">
 		<fieldset class="form-group">
 			<div class="form-group">
-				{if form.debug.data == True}
-				<h1>{init_script_debug(form.debug.data, "http://127.0.0.1:4450/")}</h1>
-				{endif}
+				<p>{{ __status }}</p>
 			</div>
 		</fieldset>
 	</div>

@@ -32,6 +32,8 @@ import math  				# lib for mathematical expression
 # if it is turned on and every function will display what is doing and what 
 # is happening at real time
 
+global DEBUG_flag
+
 
 def init_script_debug(bool_DEBUG, url_from):							# Init function, in the ideal code, this won't appear
 																		# it would handle the DEBUG flag inmediatly
@@ -49,15 +51,14 @@ def init_script_debug(bool_DEBUG, url_from):							# Init function, in the ideal
     match_pattern_2 = preg.search(pattern, str(file_path))				# and on the name of the file path. This method returns a string indicating 
     																	# the position of the matched pattern, how many times it found it (if it's the case)
  																		# and the matched pattern, otherwise, it returns an empty string (None)
- 
     if(match_pattern_2 != None):
     #| (match_pattern_1 != None):			                            # Will check in the both names (path and headers) one or another
         print("= direct access disabled =")								# If the pattern matched, the direct acces is blocked and the system exits
         sys.exit()
 
     if(bool_DEBUG == 1):												# If the debug flag is on, it shouts the 'p' case and prints it in a html format
-        shout('p', 'debug')
-
+        DEBUG_flag = 1
+        return shout('p', 'debug')
 
 # ========================================= [ FUNCTIONS ] ============================================================================== #
 
@@ -67,48 +68,53 @@ def init_script_debug(bool_DEBUG, url_from):							# Init function, in the ideal
 def shout(char_class, obj_this):
     match(char_class):
         case 'p': # case SECTION
-            print(
-                f"<br><br><strong style=\"color:#F93;\">SECTION:</strong> {obj_this} \n")
+            return f'<br><br><strong style=\"color:#F93;\">SECTION:</strong> {obj_this} \n'
 
         case 'i': # case INFO STATUS 
-            print(
-                "<br><strong style=\"color:#9CF;\">INFO STATUS:</strong>", obj_this, "\n")
+                return f'<br><strong style=\"color:#9CF;\">INFO STATUS:</strong>" {obj_this} \n'
             
         case 'e': # case ERROR
-            print(
-            	"<br><strong style=\"color:#600;\">ERROR:</strong>", obj_this, "\n")
+            	return f'<br><strong style=\"color:#600;\">ERROR:</strong>" {obj_this} \n'
             
         case 'q': # case QUERY
-            print(
-            	"<br><strong style=\"color:#33C;\">QUERY:</strong>", obj_this, "\n")
+            	return f'<br><strong style=\"color:#33C;\">QUERY:</strong>" {obj_this} \n'
             
         case 'r': # case RESULT
-            print(
-            	"<br><strong style=\"color:#669;\">RESULT:</strong>", obj_this, "\n")
+            	return f'<br><strong style=\"color:#669;\">RESULT:</strong>" {obj_this} \n'
            
         case 's': # case SYSTEM
-            print(
-            	"<br><strong style=\"color:#06F;\">SYSTEM:</strong>", obj_this, "\n")
+            	return f'<br><strong style=\"color:#06F;\">SYSTEM:</strong>" {obj_this} \n'
            
         case '@': # case ARRAY															# In this particular case, it takes the keys of the dict
-            print("<br><strong style=\"color:#C90;\">ARRAY:</strong> <ol><li>")			# and prints it beetween <li> tags on different rows through 
-            print('</li>\n<li>'.join(obj_this))											# a for loop
-            print("</li></ol> \n")
+                                                                                		# and prints it beetween <li> tags on different rows through 
+            str_a = ["<br><strong style=\"color:#C90;\">ARRAY:</strong> <ol><li>"]        # and prints it beetween <li> tags on different rows through 
+            str_a.append('</li>\n<li>'.join(obj_this))                                  # a for loop
+            str_a.append("</li></ol> \n")
+            return str_a
          
         case '%': # case HASH
-            print("<br><strong style=\"color:#093;\">HASH:</strong> <ul> \n")			# In this case, it prints the keys and the values
+            str_a = ['<br><strong style=\"color:#093;\">HASH:</strong> <ul> \n']		# In this case, it prints the keys and the values
+            
             for str_thiskey in obj_this:												# beetween <li> tags each one on different rows
-                print(" <li>", str_thiskey, ": ",
-                      obj_this[str_thiskey], "</li> \n")
-            print("</ul>")
+                str_a.append(" <li>")
+                str_a.append(str_thiskey)
+                str_a.append(": ")
+                str_a.append(obj_this[str_thiskey])
+                str_a.append("</li> \n")
+            str_a.append('</ul>')
+            return str_a
         
         case '?': # case STRUCTURE 														# This case informs the type of the object and prints the entire
-            print("<br><strong style=\"color:#90F;\">STRUCTURE:</strong> <ul> \n")		# object on a single row
-            print("<br><strong style=\"color:palegreen4;\"> ", type(obj_this),
-                  "</strong>", repr(obj_this), "\n")
+            str_a = ['<br><strong style=\"color:#90F;\">STRUCTURE:</strong> <ul> \n']		# object on a single row
+            str_a.append("<br><strong style=\"color:palegreen4;\"> ") 
+            str_a.append(str(type(obj_this)))
+            str_a.append("</strong>")
+            str_a.append(str(repr(obj_this)))
+            str_a.append("\n")
+            return str_a
         
         case '_': # case EMPTY
-            print("<br><strong style=\"color:#699;\">-:</strong>", obj_this, "\n")
+            return f'<br><strong style=\"color:#699;\">-:</strong>" {obj_this} \n'
 
 
 # Ideally, this method starts the debugging, it gets from the URL given data, cookies and path.
